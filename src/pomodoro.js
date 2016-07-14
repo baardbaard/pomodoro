@@ -12,15 +12,15 @@ export default class Pomodoro extends React.Component {
     }
 
     type(e) {
-        this.setState({
-            until: e.target.value
-        });
+        this.setState({ until: e.target.value });
+    }
+
+    handleKeyDown(e) {
+        if (e.keyCode == 13 ) { return this.start(); }
     }
 
     start() {
-        if(this.state.until <= 0) {
-            return;
-        }
+        if(this.state.until <= 0) { return; }
 
         this.setState({ enabled: false });
         this.interval = setInterval( () => {
@@ -44,7 +44,9 @@ export default class Pomodoro extends React.Component {
             enabled: true
         });
 
-        ReactDOM.findDOMNode(this.refs.input).focus();
+        let input = this.refs.input;
+        input.focus();
+        input.select();
 
         return clearInterval(this.interval);
     }
@@ -61,7 +63,9 @@ export default class Pomodoro extends React.Component {
                     inputMode="numeric"
                     ref="input"
                     onChange={ this.type.bind(this) }
-                    value={ this.state.until } />
+                    onKeyDown={ this.handleKeyDown.bind(this) }
+                    value={ this.state.until }
+                    autoFocus />
                 <button disabled={ ! this.state.enabled }
                     onClick={ this.start.bind(this) }>Go</button>
                 <h1>{ this.state.time }</h1>
