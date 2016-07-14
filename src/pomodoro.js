@@ -56,8 +56,14 @@ export default class Pomodoro extends React.Component {
     render() {
         return (
             <div>
-                <input ref="input" onChange={ this.type.bind(this) } value={ this.state.until } />
-                <button disabled={ ! this.state.enabled } onClick={ this.start.bind(this) }>Go</button>
+                <input type="number"
+                    pattern="[0-9]*"
+                    inputMode="numeric"
+                    ref="input"
+                    onChange={ this.type.bind(this) }
+                    value={ this.state.until } />
+                <button disabled={ ! this.state.enabled }
+                    onClick={ this.start.bind(this) }>Go</button>
                 <h1>{ this.state.time }</h1>
             </div>
         );
