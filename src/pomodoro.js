@@ -18,6 +18,10 @@ export default class Pomodoro extends React.Component {
     }
 
     start() {
+        if(this.state.until <= 0) {
+            return;
+        }
+
         this.setState({ enabled: false });
         this.interval = setInterval( () => {
             this.tick();
